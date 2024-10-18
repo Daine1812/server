@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Thời Khóa Biểu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="them_thong_bao.html">Thêm Thông Báo</a></li>
+                <li><a href="xem_thong_bao.html">Xem Thông Báo</a></li>
+                <li><a href="them_thoi_khoa_bieu.html">Thêm Thời Khóa Biểu</a></li>
+                <li><a href="xem_thoi_khoa_bieu.html">Xem Thời Khóa Biểu</a></li>
+                <li><a href="nhap_diem.html">Nhập Điểm</a></li>
+                <li><a href="xem_diem.html">Xem Điểm</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Thêm Thời Khóa Biểu</h1>
+        <form id="schedule-form">
+            <label for="subject">Môn học:</label><br>
+            <input type="text" id="subject" name="subject" required><br><br>
+            <label for="time">Thời gian:</label><br>
+            <input type="text" id="time" name="time" required><br><br>
+            <button type="submit">Lưu Thời Khóa Biểu</button>
+        </form>
+    </main>
+    <footer>
+        <p>© 2024 Trang Web Học Tập</p>
+    </footer>
+
+    <script>
+        document.getElementById('schedule-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const subject = document.getElementById('subject').value;
+            const time = document.getElementById('time').value;
+
+            const schedules = JSON.parse(localStorage.getItem('schedules')) || [];
+            schedules.push({ subject, time });
+            localStorage.setItem('schedules', JSON.stringify(schedules));
+
+            window.location.href = 'xem_thoi_khoa_bieu.html';
+        });
+    </script>
+    <script>
+        const userRole = localStorage.getItem('userRole');
+    
+        if (userRole !== 'admin') {
+            alert('Bạn không có quyền truy cập trang này!');
+            window.location.href = 'index.html'; // Chuyển hướng đến trang chính
+        }
+    </script>
+    
+</body>
+</html>

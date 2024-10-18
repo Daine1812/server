@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xem Điểm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="them_thong_bao.html">Thêm Thông Báo</a></li>
+                <li><a href="xem_thong_bao.html">Xem Thông Báo</a></li>
+                <li><a href="them_thoi_khoa_bieu.html">Thêm Thời Khóa Biểu</a></li>
+                <li><a href="xem_thoi_khoa_bieu.html">Xem Thời Khóa Biểu</a></li>
+                <li><a href="nhap_diem.html">Nhập Điểm</a></li>
+                <li><a href="xem_diem.html">Xem Điểm</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Xem Điểm</h1>
+        <table id="score-table">
+            <thead>
+                <tr>
+                    <th>Tên Học Sinh</th>
+                    <th>Điểm</th>
+                    <th>Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody id="score-list"></tbody>
+        </table>
+        <button onclick="goHome()">Quay về Trang Chủ</button>
+    </main>
+    <footer>
+        <p>© 2024 Hệ Thống Quản Lý Điểm</p>
+    </footer>
+
+    <script>
+        function loadScores() {
+            const scores = JSON.parse(localStorage.getItem('scores')) || [];
+            const scoreList = document.getElementById('score-list');
+
+            scores.forEach((scoreEntry, index) => {
+                const scoreRow = document.createElement('tr');
+                scoreRow.innerHTML = `
+                    <td>${scoreEntry.student}</td>
+                    <td>${scoreEntry.score}</td>
+                    <td><button onclick="deleteScore(${index})">Xóa</button></td>
+                `;
+                scoreList.appendChild(scoreRow);
+            });
+        }
+
+        function deleteScore(index) {
+            const scores = JSON.parse(localStorage.getItem('scores')) || [];
+            scores.splice(index, 1);
+            localStorage.setItem('scores', JSON.stringify(scores));
+            window.location.reload();
+        }
+
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        window.onload = loadScores;
+    </script>
+</body>
+</html>

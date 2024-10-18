@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #000;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 350px;
+            margin: 100px auto;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Đăng Nhập Tài Khoản</h1>
+    <form id="login-form">
+        <label for="username">Tên Đăng Nhập:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Mật Khẩu:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Đăng Nhập</button>
+    </form>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const user = JSON.parse(localStorage.getItem(username));
+
+            if (user && user.password === password) {
+                localStorage.setItem('currentUser', username);
+                localStorage.setItem('userRole', user.role); // Lưu vai trò
+                window.location.href = 'index.html';
+            } else {
+                alert('Tên đăng nhập hoặc mật khẩu không đúng!');
+            }
+        });
+    </script>
+</body>
+</html>

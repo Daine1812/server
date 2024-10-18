@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điểm Danh</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Liên kết đến tệp CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hệ Thống Điểm Danh</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên Sinh Viên</th>
+                <th>Điểm Danh</th>
+            </tr>
+        </thead>
+        <tbody id="student-list">
+            <!-- Danh sách sinh viên sẽ được thêm ở đây -->
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <button id="submit-attendance">Lưu Điểm Danh</button>
+    </div>
+
+    <script>
+        // Mảng chứa thông tin sinh viên
+        const students = [
+            { id: 1, name: 'Nguyễn Văn A' },
+            { id: 2, name: 'Trần Thị B' },
+            { id: 3, name: 'Lê Văn C' },
+            // Thêm nhiều sinh viên hơn nếu cần
+        ];
+
+        const studentList = document.getElementById('student-list');
+
+        // Hàm hiển thị danh sách sinh viên
+        function displayStudents() {
+            students.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.id}</td>
+                    <td>${student.name}</td>
+                    <td><input type="checkbox" class="attendance-checkbox" data-id="${student.id}"></td>
+                `;
+                studentList.appendChild(row);
+            });
+        }
+
+        // Xử lý khi nhấn nút "Lưu Điểm Danh"
+        document.getElementById('submit-attendance').addEventListener('click', function() {
+            const attendanceRecords = [];
+            const checkboxes = document.querySelectorAll('.attendance-checkbox');
+            checkboxes.forEach(checkbox => {
+                attendanceRecords.push({
+                    id: checkbox.getAttribute('data-id'),
+                    present: checkbox.checked
+                });
+            });
+            console.log(attendanceRecords); // Ghi nhận trạng thái điểm danh
+            alert('Điểm danh đã được lưu!');
+        });
+
+        // Hiển thị danh sách sinh viên
+        displayStudents();
+    </script>
+</body>
+</html>

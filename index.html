@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng Ký</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Đăng Ký</h2>
+    <input type="email" id="registerEmail" placeholder="Nhập email">
+    <input type="password" id="registerPassword" placeholder="Nhập mật khẩu">
+    <button onclick="register()">Đăng Ký</button>
+    <p id="message"></p>
+
+    <a href="login.html">Đã có tài khoản? Đăng nhập</a>
+  </div>
+
+  <!-- Tải Firebase SDK trước -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
+
+  <!-- Tải script.js sau SDK -->
+  <script src="script.js"></script>
+</body>
+</html>

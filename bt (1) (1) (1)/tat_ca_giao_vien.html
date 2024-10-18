@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tất Cả Giáo Viên</title>
+    <style>
+        /* Reset một số thuộc tính mặc định */
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #4CAF50; /* Màu nền cho header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none; /* Bỏ dấu chấm trước danh sách */
+        }
+
+        nav ul li {
+            display: inline; /* Hiển thị danh sách ngang */
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .search-container {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .search-container input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .teacher-list {
+            margin: 20px;
+        }
+
+        .teacher-list h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Hợp nhất các đường biên */
+        }
+
+        th, td {
+            border: 1px solid #ddd; /* Đường biên cho bảng */
+            padding: 8px; /* Khoảng cách giữa nội dung và đường biên */
+            text-align: center; /* Căn giữa nội dung */
+        }
+
+        th {
+            background-color: #4CAF50; /* Màu nền cho tiêu đề bảng */
+            color: white; /* Màu chữ cho tiêu đề bảng */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Màu nền cho hàng chẵn */
+        }
+
+        tr:hover {
+            background-color: #ddd; /* Màu nền khi di chuột qua hàng */
+        }
+
+        button {
+            background-color: #f44336; /* Màu nền cho nút */
+            color: white; /* Màu chữ cho nút */
+            border: none; /* Bỏ đường biên */
+            padding: 5px 10px; /* Khoảng cách bên trong nút */
+            border-radius: 5px; /* Bo góc cho nút */
+            cursor: pointer; /* Đổi con trỏ khi di chuột qua nút */
+        }
+
+        button:hover {
+            background-color: #d32f2f; /* Màu nền cho nút khi di chuột qua */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tất Cả Giáo Viên</h1>
+        <nav>
+            <ul>
+                <li><a href="indexx.html">Trang Chủ</a></li>
+                <li><a href="tat_ca_giao_vien.html">Tất Cả Giáo Viên</a></li>
+                <li><a href="them_giao_vien.html">Thêm Giáo Viên</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Tìm kiếm theo tên giáo viên...">
+    </div>
+
+    <div class="teacher-list">
+        <h2>Danh Sách Giáo Viên</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Tuổi</th>
+                    <th>Bằng Cấp</th>
+                    <th>Môn Dạy</th>
+                    <th>Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody id="teacher-table-body">
+                <!-- Dữ liệu sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+        const tableBody = document.getElementById('teacher-table-body');
+        const searchInput = document.getElementById('search-input');
+
+        function renderTable(filteredTeachers) {
+            tableBody.innerHTML = ''; // Xóa nội dung cũ
+            filteredTeachers.forEach(teacher => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${teacher.id}</td>
+                    <td>${teacher.name}</td>
+                    <td>${teacher.age}</td>
+                    <td>${teacher.degree}</td>
+                    <td>${teacher.subject}</td>
+                    <td>
+                        <button onclick="deleteTeacher('${teacher.id}')">Xóa</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function deleteTeacher(id) {
+            const confirmed = confirm('Bạn có chắc chắn muốn xóa giáo viên này?');
+            if (confirmed) {
+                const updatedTeachers = teachers.filter(teacher => teacher.id !== id);
+                localStorage.setItem('teachers', JSON.stringify(updatedTeachers));
+                renderTable(updatedTeachers); // Cập nhật bảng
+            }
+        }
+
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value.toLowerCase();
+            const filteredTeachers = teachers.filter(teacher => 
+                teacher.name.toLowerCase().includes(query)
+            );
+            renderTable(filteredTeachers);
+        });
+
+        // Hiển thị danh sách giáo viên ban đầu
+        renderTable(teachers);
+    </script>
+</body>
+</html>

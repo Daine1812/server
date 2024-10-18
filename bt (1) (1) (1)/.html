@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xem Thông Tin Sinh Viên</title>
+    <link rel="stylesheet" href="">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .student-info {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .student-info th, .student-info td {
+            padding: 10px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .student-info th {
+            background-color: #fafafa;
+            color: #333;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .student-info tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .edit-btn, .delete-btn, .save-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .edit-btn:hover, .delete-btn:hover, .save-btn:hover {
+            background-color: #c82333;
+        }
+
+        .button-space {
+            margin-right: 5px;
+        }
+
+        .student-details {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Thông Tin Sinh Viên</h1>
+    <div id="student-info-container">
+        <!-- Thông tin sinh viên sẽ được thêm vào đây -->
+    </div>
+    <a href="index.html">Quay lại Trang Chủ</a>
+
+    <script>
+        window.onload = function() {
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            const studentInfoContainer = document.querySelector('#student-info-container');
+
+            students.forEach(student => {
+                const studentDetails = document.createElement('div');
+                studentDetails.classList.add('student-details');
+                studentDetails.innerHTML = `
+                    <table class="student-info">
+                        <tbody>
+                            <tr><th>Họ tên:</th><td>${student.name}</td></tr>
+                            <tr><th>Giới Tính:</th><td>${student.gender}</td></tr>
+                            <tr><th>Ngày Sinh:</th><td>${student.dob}</td></tr>
+                            <tr><th>Nơi Sinh:</th><td>${student.birthplace}</td></tr>
+                            <tr><th>Quê Quán:</th><td>${student.hometown}</td></tr>
+                            <tr><th>CCCD:</th><td>${student.cccd}</td></tr>
+                            <tr><th>Ngày Cấp CCCD:</th><td>${student.issueDate}</td></tr>
+                            <tr><th>Nơi Cấp CCCD:</th><td>${student.issuePlace}</td></tr>
+                            <tr><th>Dân Tộc:</th><td>${student.ethnicity}</td></tr>
+                            <tr><th>Tôn Giáo:</th><td>${student.religion}</td></tr>
+                            <tr><th>Điện Thoại:</th><td>${student.phone}</td></tr>
+                            <tr><th>Email:</th><td>${student.email}</td></tr>
+                            <tr><th>Tên Cha:</th><td>${student.fatherName}</td></tr>
+                            <tr><th>Nghề Nghiệp (Cha):</th><td>${student.fatherJob}</td></tr>
+                            <tr><th>Điện Thoại (Cha):</th><td>${student.fatherPhone}</td></tr>
+                            <tr><th>Tên Mẹ:</th><td>${student.motherName}</td></tr>
+                            <tr><th>Nghề Nghiệp (Mẹ):</th><td>${student.motherJob}</td></tr>
+                            <tr><th>Điện Thoại (Mẹ):</th><td>${student.motherPhone}</td></tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button class="edit-btn button-space">Sửa</button>
+                                    <button class="delete-btn">Xóa</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+                studentInfoContainer.appendChild(studentDetails);
+            });
+
+            // Lắng nghe sự kiện click cho các nút sửa
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    editStudent(this);
+                });
+            });
+
+            // Lắng nghe sự kiện click cho các nút xóa
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    deleteStudent(this);
+                });
+            });
+        };
+
+        function editStudent(button) {
+            const studentDetails = button.closest('.student-details'); // Lấy phần thông tin sinh viên
+            const rows = studentDetails.querySelectorAll('tr');
+
+            rows.forEach((row, index) => {
+                const cell = row.querySelector('td');
+                if (cell) {
+                    const input = document.createElement('input');
+                    input.value = cell.innerText; // Đặt giá trị ô nhập liệu bằng giá trị hiện tại
+                    input.style.width = "100%"; // Đặt chiều rộng của ô nhập liệu
+                    cell.innerHTML = ''; // Xóa nội dung ô hiện tại
+                    cell.appendChild(input); // Thêm ô nhập liệu vào ô
+                }
+            });
+
+            button.innerText = 'Lưu'; // Đổi tên nút thành "Lưu"
+            button.classList.remove('edit-btn'); // Xóa lớp nút sửa
+            button.classList.add('save-btn'); // Thêm lớp cho nút lưu
+
+            // Đổi sự kiện click cho nút Lưu
+            button.onclick = function() {
+                saveStudent(this, studentDetails);
+            };
+        }
+
+        function saveStudent(button, studentDetails) {
+            const rows = studentDetails.querySelectorAll('tr');
+
+            rows.forEach((row, index) => {
+                const cell = row.querySelector('td');
+                if (cell) {
+                    const input = cell.querySelector('input'); // Lấy ô nhập liệu
+                    if (input) {
+                        cell.innerText = input.value; // Cập nhật giá trị ô
+                    }
+                }
+            });
+
+            button.innerText = 'Sửa'; // Đổi tên nút trở lại "Sửa"
+            button.classList.remove('save-btn'); // Xóa lớp nút lưu
+            button.classList.add('edit-btn'); // Thêm lớp cho nút sửa
+
+            // Cập nhật localStorage sau khi lưu
+            updateLocalStorage();
+        }
+
+        function deleteStudent(button) {
+            const studentDetails = button.closest('.student-details');
+            studentDetails.remove(); // Xóa phần thông tin sinh viên khỏi DOM
+
+            // Cập nhật localStorage sau khi xóa
+            updateLocalStorage();
+        }
+
+        function updateLocalStorage() {
+            const updatedStudents = Array.from(document.querySelectorAll('.student-details')).map(studentDetails => {
+                const cells = studentDetails.querySelectorAll('td');
+                return {
+                    name: cells[0].innerText,
+                    gender: cells[1].innerText,
+                    dob: cells[2].innerText,
+                    birthplace: cells[3].innerText,
+                    hometown: cells[4].innerText,
+                    cccd: cells[5].innerText,
+                    issueDate: cells[6].innerText,
+                    issuePlace: cells[7].innerText,
+                    ethnicity: cells[8].innerText,
+                    religion: cells[9].innerText,
+                    phone: cells[10].innerText,
+                    email: cells[11].innerText,
+                    fatherName: cells[12].innerText,
+                    fatherJob: cells[13].innerText,
+                    fatherPhone: cells[14].innerText,
+                    motherName: cells[15].innerText,
+                    motherJob: cells[16].innerText,
+                    motherPhone: cells[17].innerText
+                };
+            });
+
+            localStorage.setItem('students', JSON.stringify(updatedStudents));
+        }
+    </script>
+</body>
+</html>

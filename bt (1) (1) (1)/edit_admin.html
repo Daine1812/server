@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Thông Tin Admin</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://example.com/your-background-image.jpg'); /* Cập nhật với ảnh nền của bạn */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            color: #000;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000;
+        }
+        form {
+            max-width: 350px;
+            margin: 100px auto;
+            background: rgba(255, 255, 255, 0.8); /* Nền sáng */
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00bfa5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #008e7a;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chỉnh Sửa Thông Tin Admin</h1>
+    <form id="edit-form">
+        <label for="username">Tên Đăng Nhập:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Mật Khẩu:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Lưu Thay Đổi</button>
+    </form>
+
+    <script>
+        // Tải thông tin admin khi trang được mở
+        const adminUser = JSON.parse(localStorage.getItem('tuan'));
+        if (adminUser) {
+            document.getElementById('username').value = adminUser.username;
+            document.getElementById('password').value = adminUser.password;
+        }
+
+        // Xử lý sự kiện khi gửi form
+        document.getElementById('edit-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Cập nhật thông tin admin
+            const updatedUser = { username, password, role: 'admin' };
+            localStorage.setItem(username, JSON.stringify(updatedUser)); // Cập nhật thông tin vào localStorage
+            
+            alert('Thông tin đã được cập nhật thành công!');
+            window.location.href = 'indexx.html'; // Chuyển đến trang chính
+        });
+    </script>
+</body>
+</html>

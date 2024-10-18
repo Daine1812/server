@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Môn Học</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center; /* Căn giữa nội dung */
+            background-color: #f4f4f4; /* Màu nền nhẹ */
+        }
+
+        h1 {
+            color: #4CAF50; /* Màu xanh lá cho tiêu đề */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Hiệu ứng đổ bóng */
+        }
+
+        .course {
+            margin: 20px auto; /* Tạo khoảng cách và căn giữa */
+            padding: 15px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            width: 60%; /* Chiều rộng 60% */
+            background: linear-gradient(90deg, rgba(255, 255, 0, 0.8), rgba(255, 0, 255, 0.8)); /* Màu nền gradient */
+            border-radius: 10px; /* Bo góc */
+            transition: transform 0.3s, box-shadow 0.3s; /* Hiệu ứng khi hover */
+        }
+
+        .course:hover {
+            transform: scale(1.05); /* Tăng kích thước khi hover */
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng */
+        }
+
+        .details {
+            display: none;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #fff; /* Nền trắng cho chi tiết */
+            border-radius: 5px; /* Bo góc */
+        }
+
+        .details p {
+            color: #555; /* Màu chữ cho thông tin chi tiết */
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #45a049; /* Hiệu ứng khi hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Các Môn Học</h1>
+    <a href="trangchu.html" class="back-button">Quay lại trang chủ</a> <!-- Nút quay lại trang chủ -->
+    <div id="courses"></div>
+
+    <script>
+        const courses = [
+            { name: "Lập Trình Web", credits: 3, details: "Khóa học này cung cấp kiến thức về lập trình web, từ HTML, CSS đến JavaScript." },
+            { name: "Cơ Sở Dữ Liệu", credits: 3, details: "Khóa học này hướng dẫn về quản lý và thiết kế cơ sở dữ liệu." },
+            { name: "Kỹ Thuật Mạng", credits: 3, details: "Khóa học này giúp sinh viên hiểu về các công nghệ mạng và giao thức." },
+            { name: "Phát Triển Ứng Dụng Di Động", credits: 3, details: "Khóa học này cung cấp kiến thức về phát triển ứng dụng di động." },
+            { name: "Phân Tích Hệ Thống", credits: 3, details: "Khóa học này dạy cách phân tích và thiết kế hệ thống." },
+            { name: "Kiến Trúc Máy Tính", credits: 3, details: "Khóa học này nghiên cứu cấu trúc và hoạt động của máy tính." },
+            { name: "Hệ Điều Hành", credits: 3, details: "Khóa học này giúp sinh viên hiểu về nguyên lý và chức năng của hệ điều hành." },
+            { name: "Lập Trình C#", credits: 3, details: "Khóa học này giới thiệu lập trình với ngôn ngữ C#." },
+            { name: "Trí Tuệ Nhân Tạo", credits: 3, details: "Khóa học này khám phá các khái niệm cơ bản về trí tuệ nhân tạo." },
+            { name: "An Ninh Mạng", credits: 3, details: "Khóa học này cung cấp kiến thức về bảo mật thông tin và mạng." },
+            { name: "Quản Lý Dự Án CNTT", credits: 3, details: "Khóa học này dạy quản lý dự án trong lĩnh vực công nghệ thông tin." },
+            { name: "Kinh Tế Vi Mô", credits: 3, details: "Khóa học này nghiên cứu hành vi của cá nhân và doanh nghiệp." },
+            { name: "Kinh Tế Vĩ Mô", credits: 3, details: "Khóa học này nghiên cứu các hiện tượng kinh tế tổng thể." },
+            { name: "Marketing", credits: 3, details: "Khóa học này giới thiệu các chiến lược marketing." },
+            { name: "Quản Trị Doanh Nghiệp", credits: 3, details: "Khóa học này dạy về quản lý doanh nghiệp." },
+            { name: "Quản Trị Nhân Sự", credits: 3, details: "Khóa học này cung cấp kiến thức về quản trị nguồn nhân lực." },
+            { name: "Quản Trị Tài Chính", credits: 3, details: "Khóa học này nghiên cứu quản lý tài chính trong doanh nghiệp." },
+            { name: "Đạo Đức Kinh Doanh", credits: 3, details: "Khóa học này khám phá đạo đức trong kinh doanh." },
+            { name: "Quản Lý Rủi Ro", credits: 3, details: "Khóa học này nghiên cứu quản lý rủi ro trong doanh nghiệp." },
+            { name: "Hành Vi Tổ Chức", credits: 3, details: "Khóa học này nghiên cứu hành vi trong tổ chức." },
+            { name: "Thống Kê Kinh Tế", credits: 3, details: "Khóa học này sử dụng thống kê trong phân tích kinh tế." },
+            { name: "Lập Trình Python", credits: 3, details: "Khóa học này giúp sinh viên làm quen với lập trình Python." },
+            { name: "Thiết Kế Đồ Họa", credits: 3, details: "Khóa học này cung cấp kiến thức về thiết kế đồ họa." },
+            { name: "Thương Mại Điện Tử", credits: 3, details: "Khóa học này nghiên cứu về thương mại điện tử." },
+            { name: "Lãnh Đạo và Quản Lý", credits: 3, details: "Khóa học này nghiên cứu về kỹ năng lãnh đạo." },
+            { name: "Kinh Doanh Khởi Nghiệp", credits: 3, details: "Khóa học này khám phá các khía cạnh của khởi nghiệp." },
+            { name: "Quản Lý Sản Xuất", credits: 3, details: "Khóa học này nghiên cứu quản lý quy trình sản xuất." },
+            { name: "Quản Lý Chất Lượng", credits: 3, details: "Khóa học này dạy về quản lý chất lượng trong sản xuất." },
+            { name: "Quản Trị Hệ Thống Thông Tin", credits: 3, details: "Khóa học này nghiên cứu về quản trị hệ thống thông tin." },
+            { name: "Kinh Doanh Quốc Tế", credits: 3, details: "Khóa học này cung cấp kiến thức về kinh doanh toàn cầu." },
+            { name: "Phân Tích Dữ Liệu", credits: 3, details: "Khóa học này dạy về phân tích và trực quan hóa dữ liệu." },
+            { name: "Nghiên Cứu Thị Trường", credits: 3, details: "Khóa học này nghiên cứu cách thức tiến hành nghiên cứu thị trường." },
+            { name: "Thương Mại Quốc Tế", credits: 3, details: "Khóa học này dạy về thương mại trên quy mô toàn cầu." },
+            { name: "Quản Lý Vận Tải", credits: 3, details: "Khóa học này nghiên cứu về quản lý hệ thống vận tải." },
+            { name: "Quản Lý Chuỗi Cung Ứng", credits: 3, details: "Khóa học này dạy về quản lý chuỗi cung ứng." },
+            { name: "Tài Chính Doanh Nghiệp", credits: 3, details: "Khóa học này nghiên cứu tài chính trong doanh nghiệp." },
+            { name: "Bất Động Sản", credits: 3, details: "Khóa học này cung cấp kiến thức về lĩnh vực bất động sản." },
+            { name: "Đầu Tư", credits: 3, details: "Khóa học này giới thiệu các khái niệm đầu tư." },
+            { name: "Quản Lý Ngân Hàng", credits: 3, details: "Khóa học này nghiên cứu quản lý ngân hàng." },
+            { name: "Nguyên Tắc Quản Lý", credits: 3, details: "Khóa học này dạy về các nguyên tắc quản lý cơ bản." },
+            { name: "Thương Hiệu", credits: 3, details: "Khóa học này nghiên cứu về xây dựng thương hiệu." },
+            { name: "Lập Kế Hoạch Kinh Doanh", credits: 3, details: "Khóa học này dạy cách lập kế hoạch kinh doanh hiệu quả." },
+            { name: "Phát Triển Bền Vững", credits: 3, details: "Khóa học này nghiên cứu về phát triển bền vững." },
+            { name: "Tư Duy Phê Phán", credits: 3, details: "Khóa học này giúp sinh viên phát triển tư duy phê phán." },
+            { name: "Quản Lý Khủng Hoảng", credits: 3, details: "Khóa học này dạy về quản lý khủng hoảng trong doanh nghiệp." },
+            { name: "Kinh Doanh Thế Giới", credits: 3, details: "Khóa học này khám phá các khía cạnh kinh doanh quốc tế." },
+            { name: "Xây Dựng Đội Nhóm", credits: 3, details: "Khóa học này giúp sinh viên phát triển kỹ năng làm việc nhóm." },
+            { name: "Sáng Tạo Kinh Doanh", credits: 3, details: "Khóa học này nghiên cứu về sự sáng tạo trong kinh doanh." },
+            { name: "Chiến Lược Đầu Tư", credits: 3, details: "Khóa học này giúp sinh viên hiểu về chiến lược đầu tư." }
+        ];
+
+        function loadCourses() {
+            const coursesDiv = document.getElementById('courses');
+            courses.forEach((course) => {
+                const courseDiv = document.createElement('div');
+                courseDiv.className = 'course';
+                courseDiv.innerHTML = `<strong>${course.name}</strong> - Tín chỉ: ${course.credits}`;
+                
+                const detailDiv = document.createElement('div');
+                detailDiv.className = 'details';
+                detailDiv.innerText = course.details;
+                
+                courseDiv.onclick = () => {
+                    detailDiv.style.display = detailDiv.style.display === 'none' ? 'block' : 'none';
+                };
+
+                courseDiv.appendChild(detailDiv);
+                coursesDiv.appendChild(courseDiv);
+            });
+        }
+
+        loadCourses();
+    </script>
+</body>
+</html>

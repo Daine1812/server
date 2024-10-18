@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Sinh Viên</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            color: white;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+        }
+        .form-container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Thêm Sinh Viên</h1>
+        <nav>
+            <ul>
+                <li><a href="trangchu.html">Trang Chủ</a></li>
+                <li><a href="tat_ca_sinh_vien.html">Tất Cả Sinh Viên</a></li>
+                <li><a href="diem_danh_sinh_vien.html">Điểm Danh Sinh Viên</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="form-container">
+        <h2>Nhập Thông Tin Sinh Viên</h2>
+        <input type="text" id="student-id" placeholder="ID Sinh Viên" required>
+        <input type="text" id="student-name" placeholder="Tên Sinh Viên" required>
+        <input type="number" id="student-age" placeholder="Tuổi" required>
+        <input type="text" id="student-major" placeholder="Chuyên Ngành" required>
+        <input type="number" id="student-year" placeholder="Năm Nhập Học" required>
+        <button id="add-student-button">Thêm Sinh Viên</button>
+    </div>
+
+    <script>
+        const students = JSON.parse(localStorage.getItem('students')) || [];
+
+        document.getElementById('add-student-button').addEventListener('click', function() {
+            const id = document.getElementById('student-id').value;
+            const name = document.getElementById('student-name').value;
+            const age = document.getElementById('student-age').value;
+            const major = document.getElementById('student-major').value;
+            const year = document.getElementById('student-year').value;
+
+            const exists = students.some(student => student.id === id);
+            if (exists) {
+                alert('ID sinh viên đã tồn tại. Vui lòng nhập ID khác.');
+                return;
+            }
+
+            const newStudent = {
+                id: id,
+                name: name,
+                age: parseInt(age),
+                major: major,
+                year: parseInt(year)
+            };
+
+            students.push(newStudent);
+            localStorage.setItem('students', JSON.stringify(students));
+
+            alert('Thêm sinh viên thành công!');
+            window.location.href = 'tat_ca_sinh_vien.html';
+        });
+    </script>
+           <script>
+            // Kiểm tra người dùng hiện tại
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                alert('Vui lòng đăng nhập!');
+                window.location.href = 'dang_nhap.html';
+            } else {
+                const user = JSON.parse(localStorage.getItem(currentUser));
+                if (user.role !== 'admin') {
+                    alert('Bạn không có quyền truy cập trang này!');
+                    window.location.href = 'trangchu.html';
+                }
+            }
+    
+            document.getElementById('teacher-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+    
+                const id = document.getElementById('id').value;
+                const name = document.getElementById('name').value;
+                const age = document.getElementById('age').value;
+                const degree = document.getElementById('degree').value;
+                const subject = document.getElementById('subject').value;
+    
+                const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+                teachers.push({ id, name, age, degree, subject });
+                localStorage.setItem('teachers', JSON.stringify(teachers));
+    
+                window.location.href = 'tat_ca_giao_vien.html';
+            });
+        </script>
+</body>
+</html>

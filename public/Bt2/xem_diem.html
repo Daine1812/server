@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xem Điểm</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="them_thong_bao.html">Thêm Thông Báo</a></li>
+                <li><a href="xem_thong_bao.html">Xem Thông Báo</a></li>
+                <li><a href="them_thoi_khoa_bieu.html">Thêm Thời Khóa Biểu</a></li>
+                <li><a href="xem_thoi_khoa_bieu.html">Xem Thời Khóa Biểu</a></li>
+                <li><a href="nhap_diem.html">Nhập Điểm</a></li>
+                <li><a href="xem_diem.html">Xem Điểm</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Xem Điểm</h1>
+        <div id="score-list"></div>
+        <button onclick="goHome()">Quay về Trang Chủ</button>
+    </main>
+    <footer>
+        <p></p>
+    </footer>
+
+    <script>
+        function loadScores() {
+            const scores = JSON.parse(localStorage.getItem('scores')) || [];
+            const scoreList = document.getElementById('score-list');
+
+            scores.forEach((scoreEntry, index) => {
+                const scoreDiv = document.createElement('div');
+                scoreDiv.className = 'notification';
+                scoreDiv.innerHTML = `
+                    <h2>${scoreEntry.student}</h2>
+                    <p>Điểm: ${scoreEntry.score}</p>
+                    <button onclick="deleteScore(${index})">Xóa</button>
+                `;
+                scoreList.appendChild(scoreDiv);
+            });
+        }
+
+        function deleteScore(index) {
+            const scores = JSON.parse(localStorage.getItem('scores')) || [];
+            scores.splice(index, 1);
+            localStorage.setItem('scores', JSON.stringify(scores));
+            window.location.reload();
+        }
+
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        window.onload = loadScores;
+    </script>
+</body>
+</html>

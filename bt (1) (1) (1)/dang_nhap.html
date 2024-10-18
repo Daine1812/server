@@ -1,0 +1,132 @@
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Đăng Nhập</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-image: url('https://example.com/your-background-image.jpg'); /* Update with your background image */
+                background-size: cover;
+                background-position: center;
+                margin: 0;
+                padding: 0;
+                color: #fff;
+            }
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+                color: #000000;
+            }
+            form {
+                max-width: 350px;
+                margin: 100px auto;
+                background: rgba(255, 255, 255, 0.1); /* Transparent glass-like background */
+                padding: 25px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+                backdrop-filter: blur(10px); /* Add blur effect for glassy effect */
+                border: 1px solid rgba(255, 255, 255, 0.2); /* Border with transparency */
+            }
+            label {
+                display: block;
+                margin-bottom: 10px;
+                font-weight: bold;
+                color: #000000;
+            }
+            input[type="text"], input[type="password"] {
+                width: 100%;
+                padding: 5px;
+                margin-bottom: 20px;
+                border: none;
+                border-radius: 5px;
+                background: rgba(0, 0, 0, 0.2); /* Transparent input fields */
+                color: #000000;
+                font-size: 16px;
+            }
+            input::placeholder {
+                color: #000000; /* Light placeholder text color */
+            }
+            button {
+                width: 100%;
+                padding: 12px;
+                background-color: #00bfa5;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            button:hover {
+                background-color: #008e7a;
+            }
+            .register-link {
+                text-align: center;
+                margin-top: 15px;
+                color: #d3d3d3;
+            }
+            .register-link a {
+                color: #00bfa5;
+                text-decoration: none;
+            }
+            .register-link a:hover {
+                text-decoration: underline;
+            }
+            .forgot-password {
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            .forgot-password a {
+                color: #00bfa5;
+                text-decoration: none;
+            }
+            .forgot-password a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Đăng Nhập Tài Khoản</h1>
+        <form id="login-form">
+            <label for="username">Tên Đăng Nhập:</label>
+            <input type="text" id="username" name="username" placeholder="Tên đăng nhập" required>
+
+            <label for="password">Mật Khẩu:</label>
+            <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
+
+            <div class="forgot-password">
+                <label>
+                    <input type="checkbox" name="remember"> Ghi nhớ tôi
+                </label>
+                <a href="#">Quên mật khẩu?</a>
+            </div>
+
+            <button type="submit">Đăng Nhập</button>
+        </form>
+
+        <div class="register-link">
+            <p>Chưa có tài khoản? <a href="dang_ky.html">Đăng Ký ngay</a></p>
+        </div>
+
+        <script>
+            document.getElementById('login-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                const user = JSON.parse(localStorage.getItem(username));
+
+                if (user && user.password === password) {
+                    localStorage.setItem('currentUser', username); // Lưu tài khoản hiện tại vào localStorage
+                    window.location.href = 'indexx.html'; // Chuyển đến trang chủ
+                } else {
+                    alert('Tên đăng nhập hoặc mật khẩu không đúng!');
+                }
+            });
+        </script>
+    </body>
+    </html>

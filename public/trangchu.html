@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Liên kết đến tệp CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9; /* Màu nền trang */
+        }
+        header {
+            background-color: #4CAF50; /* Màu nền header */
+            padding: 10px 20px; /* Khoảng cách bên trong */
+        }
+        nav {
+            display: flex;
+            justify-content: space-around; /* Căn giữa các mục */
+        }
+        ul {
+            list-style: none; /* Xóa dấu chấm đầu dòng */
+            margin: 0; /* Xóa khoảng cách ngoài */
+            padding: 0; /* Xóa khoảng cách trong */
+        }
+        li {
+            display: inline; /* Hiển thị các mục trên một dòng */
+        }
+        a {
+            color: white; /* Màu chữ */
+            text-decoration: none; /* Xóa gạch chân */
+            padding: 10px 15px; /* Khoảng cách bên trong cho các liên kết */
+            transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+        }
+        a:hover {
+            background-color: #45a049; /* Màu nền khi hover */
+        }
+        .introduction {
+            padding: 20px; /* Khoảng cách cho nội dung giới thiệu */
+        }
+        .image-gallery {
+            text-align: center; /* Căn giữa hình ảnh */
+            margin: 20px 0; /* Khoảng cách trên và dưới */
+        }
+        button {
+            margin-top: 20px; /* Khoảng cách trên nút */
+            padding: 10px 20px; /* Khoảng cách bên trong nút */
+            background-color: #4CAF50; /* Màu nền nút */
+            color: white; /* Màu chữ nút */
+            border: none; /* Không có viền */
+            border-radius: 5px; /* Bo góc */
+            cursor: pointer; /* Con trỏ khi hover */
+            font-size: 16px; /* Kích thước chữ nút */
+            transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+        }
+        button:hover {
+            background-color: #45a049; /* Màu nền khi hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Trường Đại Học Đông Á</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Trang Chủ</a></li>
+                <li><a href="mon_hoc.html">Môn Học</a></li>
+                <li>
+                    <a href="#">Giáo Viên</a>
+                    <div class="dropdown">
+                        <a href="them_giao_vien.html">Thêm Giáo Viên</a>
+                        <a href="tat_ca_giao_vien.html">Tất Cả Giáo Viên</a>
+                        <a href="./Bt2/dang_ky.html">Xem Thông Tin Giáo Viên</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">Sinh Viên</a>
+                    <div class="dropdown">
+                        <a href="them_sinh_vien.html">Thêm Sinh Viên</a>
+                        <a href="tat_ca_sinh_vien.html">Tất Cả Sinh Viên</a>
+                        <a href="./bt3/dang_ky.html">Xem Thông Tin Sinh Viên</a>
+                    </div>
+                    <li>
+                        <a href="#">Điểm Danh</a>
+                        <div class="dropdown">
+                            <a href="diem_danh_sinh_vien.html">Điểm Danh Sinh Viên</a>
+                            <a href="diem_danh_giao_vien.html">Điểm Danh Giáo Viên</a>
+                        </div>
+                    </li>
+                    
+                <li>
+                    <a href="#">Hệ Thống</a>
+                    <div class="dropdown">
+                        <a href="dang_ky.html">Đăng Ký</a>
+                        <a href="dang_nhap.html">Đăng Nhập</a>
+                        <a href="logout.html" id="logout">Đăng Xuất</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="introduction">
+        <h2>Giới Thiệu Về Trường Đại Học Đông Á Phân Hiệu Đắk Lắk</h2>
+        <p>Đại học Đông Á là một trường đại học tư thục tại thành phố Đà Nẵng, Việt Nam, là một đại học đào tạo đa ngành.</p>
+        <p>Trường đại học Đông Á phấn đấu trở thành đại học uy tín ở Việt Nam và châu Á về giá trị khoa học và đào tạo, đóng góp xuất sắc vào sự phát triển cộng đồng.</p>
+        <p>Cơ sở chính tại 33 Xô Viết Nghệ Tĩnh - Đà Nẵng có tổng diện tích sàn 18.600m², 10 tầng với 140 phòng chức năng. Trong đó có: 10 phòng thực hành CNTT, 15 phòng thực hành ngoại ngữ, 24 phòng thực hành nghề nghiệp, thư viện điện tử, hội trường, 7 giảng đường lớn,...</p>
+        <p>Phân hiệu Đại học Đông Á tại Đắk Lắk có tổng diện tích mặt bằng 10 ha, gồm 3 block nhà A, B, C đang vận hành với công năng 115 phòng học lý thuyết, 27 phòng thực hành chuyên môn, thư viện, hội trường lớn, khu thể thao đa năng cùng đầy đủ các phòng chức năng.</p>
+    </div>
+
+    <div class="image-gallery">
+        <img id="gallery-image" src="https://via.placeholder.com/600x400" alt="Hình ảnh về trường đại học">
+        <div class="navigation-buttons">
+            <button id="prev-button">Trước</button>
+            <button id="next-button">Sau</button>
+        </div>
+        <p class="image-counter" id="image-counter"></p>
+    </div>
+
+    <button id="back-button">Quay Lại Trang Chủ</button> <!-- Nút quay lại -->
+
+    <footer>
+        <div class="contact-info">
+            <p>Số điện thoại: <strong>0359 838 408</strong></p>
+        </div>
+        <p>Email: <strong>info@truong.edu.vn</strong></p>
+        <p>Địa chỉ: <strong>49 Phạm Hùng, Đăk Lắk</strong></p>
+    </footer>
+
+    <script>
+        // Mảng chứa các đường dẫn hình ảnh
+        const images = [
+            'https://donga.edu.vn/portals/0/article/Cover/h%E1%BB%8Dc%20b%E1%BA%A1%2012%20-%202_02_06_2021_11_13_34.png',
+            'https://daklak.donga.edu.vn/Portals/0/phuong%20thuc%20tuyen%20sinh%202024.png',
+        ];
+    
+        let currentIndex = 0;
+    
+        const galleryImage = document.getElementById('gallery-image');
+        const imageCounter = document.getElementById('image-counter');
+    
+        // Hàm cập nhật hình ảnh và số lượng
+        function updateImage() {
+            galleryImage.src = images[currentIndex];
+            imageCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+        }
+    
+        // Xử lý khi nhấn nút "Trước"
+        document.getElementById('prev-button').addEventListener('click', function() {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1; // Quay về hình cuối cùng nếu đang ở hình đầu tiên
+            updateImage();
+        });
+    
+        // Xử lý khi nhấn nút "Sau"
+        document.getElementById('next-button').addEventListener('click', function() {
+            currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0; // Quay về hình đầu tiên nếu đang ở hình cuối cùng
+            updateImage();
+        });
+    
+        // Tự động chuyển đổi hình ảnh mỗi 3 giây (3000ms)
+        setInterval(function() {
+            currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0; // Quay về hình đầu tiên nếu đang ở hình cuối cùng
+            updateImage();
+        }, 3000);
+    
+        // Cập nhật hình ảnh ban đầu
+        updateImage();
+    
+        // Kiểm tra người dùng hiện tại
+        const currentUserEmail = localStorage.getItem('userEmail'); // Sử dụng email từ localStorage
+        if (!currentUserEmail) {
+            alert('Vui lòng đăng nhập!');
+            window.location.href = 'dang_nhap.html'; // Nếu chưa đăng nhập, chuyển đến trang đăng nhập
+        } else {
+            // Hiển thị tên người dùng
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            welcomeMessage.textContent = `Chào mừng ${currentUserEmail}`;
+    
+            // Nếu người dùng là admin, hiển thị các liên kết sửa thông tin
+            // Thêm logic kiểm tra quyền hạn nếu cần
+            // Ví dụ: if (user.role === 'admin') {...}
+        }
+    
+        // Xử lý sự kiện cho nút "Quay Lại"
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.location.href = 'trangchu.html'; // Chuyển đến trang chủ
+        });
+    </script>
+    
+</body>
+</html>

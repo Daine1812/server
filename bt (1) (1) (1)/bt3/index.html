@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        li {
+            position: relative;
+            margin-right: 20px;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        a:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #4CAF50;
+            min-width: 160px;
+            z-index: 1;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .dropdown a:hover {
+            background-color: #45a049;
+        }
+        li:hover .dropdown {
+            display: block;
+        }
+        main {
+            padding: 40px 20px;
+            text-align: center;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #4CAF50;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Trang chủ</a></li>
+                <li>
+                    <a href="#">Thông báo</a>
+                    <div class="dropdown">
+                        <a href="them_thong_bao.html">Thêm Thông Báo</a>
+                        <a href="xem_thong_bao.html">Xem Thông Báo</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">Thời khóa biểu</a>
+                    <div class="dropdown">
+                        <a href="them_thoi_khoa_bieu.html">Thêm Thời Khóa Biểu</a>
+                        <a href="xem_thoi_khoa_bieu.html">Xem Thời Khóa Biểu</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">Nhập điểm</a>
+                    <div class="dropdown">
+                        <a href="nhap_diem.html">Nhập Điểm</a>
+                        <a href="xem_diem.html">Xem Điểm</a>
+                    </div>
+                </li>
+                <li><a href="dang_ky.html">Đăng ký</a></li>
+                <li><a href="dang_nhap.html">Đăng nhập</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Chào mừng đến với Trang Web Sinh Viên!</h1>
+        <p>Đây là nơi bạn có thể tìm thấy thông tin về khóa học, thời khóa biểu và nhiều hơn nữa.</p>
+
+        <div id="admin-content" style="display:none;">
+            <h2>Nội dung dành cho Admin</h2>
+            <p>Admin có thể thêm thông báo, thời khóa biểu và nhập điểm.</p>
+        </div>
+
+        <div id="user-content" style="display:none;">
+            <h2>Nội dung dành cho người dùng</h2>
+            <p>Người dùng có thể xem thông báo, thời khóa biểu và điểm.</p>
+        </div>
+
+        <button id="back-button">Quay Lại</button>
+    </main>
+    <footer>
+        <p>© 2024 Trang Web Sinh Viên</p>
+    </footer>
+
+    <script>
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.location.href = '../indexx.html';
+        });
+
+        const currentUser = localStorage.getItem('currentUser');
+        const userRole = localStorage.getItem('userRole');
+
+        if (!currentUser) {
+            alert('Vui lòng đăng nhập!');
+            window.location.href = 'dang_nhap.html';
+        } else {
+            if (userRole === 'admin') {
+                document.getElementById('admin-content').style.display = 'block';
+            } else {
+                document.getElementById('user-content').style.display = 'block';
+            }
+        }
+    </script>
+    
+</body>
+</html>

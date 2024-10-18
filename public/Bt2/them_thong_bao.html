@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Thông Báo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="them_thong_bao.html">Thêm Thông Báo</a></li>
+                <li><a href="xem_thong_bao.html">Xem Thông Báo</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Thêm Thông Báo</h1>
+        <form id="notification-form">
+            <label for="title">Tiêu đề:</label><br>
+            <input type="text" id="title" name="title" required><br><br>
+            <label for="content">Nội dung:</label><br>
+            <textarea id="content" name="content" rows="4" required></textarea><br><br>
+            <button type="submit">Lưu Thông Báo</button>
+        </form>
+    </main>
+    <footer>
+        <p>© 2024 Trang Web Học Tập</p>
+    </footer>
+
+    <script>
+        // Kiểm tra quyền truy cập
+        const userRole = localStorage.getItem('userRole');
+        if (userRole !== 'admin') {
+            alert('Bạn không có quyền truy cập trang này.');
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('notification-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+
+            const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+            notifications.push({ title, content });
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+
+            window.location.href = 'xem_thong_bao.html';
+        });
+    </script>
+</body>
+</html>

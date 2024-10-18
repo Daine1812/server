@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Xuất</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .logout-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-container">
+        <h1>Đăng Xuất</h1>
+        <p>Bạn có chắc chắn muốn đăng xuất không?</p>
+        <button id="confirm-logout">Đăng Xuất</button>
+        <button id="cancel-logout">Hủy</button>
+    </div>
+
+    <script>
+        document.getElementById('confirm-logout').addEventListener('click', function() {
+            // Xóa thông tin người dùng (ví dụ: token, thông tin phiên đăng nhập)
+            localStorage.removeItem('user'); // Giả sử thông tin người dùng được lưu trong localStorage
+            // Chuyển hướng đến trang đăng nhập hoặc trang chủ
+            window.location.href = 'dang_nhap.html'; // Thay đổi thành trang bạn muốn chuyển hướng
+        });
+
+        document.getElementById('cancel-logout').addEventListener('click', function() {
+            // Chuyển hướng về trang trước đó hoặc trang chính
+            window.history.back();
+        });
+    </script>
+</body>
+</html>
+

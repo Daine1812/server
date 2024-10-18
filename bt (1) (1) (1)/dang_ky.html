@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://example.com/your-background-image.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            color: #000000;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000000;
+        }
+        form {
+            max-width: 350px;
+            margin: 100px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(12, 12, 12, 0.2);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #000000;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00bfa5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #d3d3d3;
+        }
+        .login-link a {
+            color: #00bfa5;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Đăng Ký Tài Khoản</h1>
+    <form id="register-form">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Nhập email" required>
+
+        <label for="username">Tên Đăng Nhập:</label>
+        <input type="text" id="username" name="username" placeholder="Tên đăng nhập" required>
+
+        <label for="password">Mật Khẩu:</label>
+        <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
+
+        <label for="confirm-password">Xác Nhận Mật Khẩu:</label>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Xác nhận mật khẩu" required>
+
+        <button type="submit">Đăng Ký</button>
+    </form>
+
+    <div class="login-link">
+        <p>Đã có tài khoản? <a href="dang_nhap.html">Đăng Nhập ngay</a></p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js"></script>
+
+    <script>
+        // TODO: Thêm thông tin cấu hình Firebase của bạn từ Firebase Console
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDKefx3IJAJ4BA9po2xRTo45gSeqEQEXg",
+            authDomain: "save-1fccd.firebaseapp.com",
+            projectId: "save-1fccd",
+            storageBucket: "save-1fccd.appspot.com",
+            messagingSenderId: "16629600307",
+            appId: "1:16629600307:web:00ca5a37bc6dfaf278d346",
+            measurementId: "G-XBMQBY4N09"
+  };
+
+        // Khởi tạo Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.getAuth(app);
+        const database = firebase.getDatabase(app);
+
+        // Xử lý form đăng ký
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert('Mật khẩu và xác nhận mật khẩu không khớp!');
+                return;
+            }
+
+            // Đăng ký người dùng với Firebase Authentication
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+
+                    // Lưu thông tin người dùng vào Realtime Database
+                    firebase.database().ref('users/' + user.uid).set({
+                        username: username,
+                        email: email,
+                        role: 'user'
+                    });
+
+                    alert('Đăng ký thành công!');
+                    window.location.href = 'dang_nhap.html';
+                })
+                .catch((error) => {
+                    alert('Lỗi: ' + error.message);
+                });
+        });
+    </script>
+</body>
+</html>

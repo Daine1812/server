@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+    <style>
+        /* Đặt background image và căn chỉnh */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('https://files.oaiusercontent.com/file-YLDUonvBr2aqOZtzKdJKBfSj?se=2024-10-18T07%3A14%3A52Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3De080a226-4410-4ed4-8869-b6628e8a9780.webp&sig=tYUe5kyvgprd0viLHyhn/fRQFCFSoD6BzdaUEg0UN1o%3D') no-repeat center center/cover;
+            background-attachment: fixed;
+        }
+
+        /* Tùy chỉnh form đăng nhập */
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.85); /* Hiệu ứng trong suốt nhẹ */
+            width: 400px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .other-options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .other-options a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .social-login {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-login img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .social-login img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Đăng Nhập</h2>
+        <form id="login-form">
+            <input type="email" id="email" placeholder="Nhập email" required>
+            <input type="password" id="password" placeholder="Nhập mật khẩu" required>
+            <button type="submit">Đăng Nhập</button>
+        </form>
+        <div class="other-options">
+            <a href="#">Quên mật khẩu?</a>
+            <a href="dang_ky.html">Đăng ký ngay</a>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <script>
+        // Cấu hình Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDKefx3IJAJ4BA9po2xRTo45gSeqEQEXg",
+            authDomain: "save-1fccd.firebaseapp.com",
+            projectId: "save-1fccd",
+            storageBucket: "save-1fccd.appspot.com",
+            messagingSenderId: "16629600307",
+            appId: "1:16629600307:web:00ca5a37bc6dfaf278d346",
+            measurementId: "G-XBMQBY4N09"
+        };
+
+        // Khởi tạo Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Xử lý đăng nhập
+        document.getElementById('login-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    localStorage.setItem('userEmail', email);
+                    alert('Đăng nhập thành công!');
+                    window.location.href = 'trangchu.html'; // Chuyển hướng đến trang chủ
+                })
+                .catch((error) => {
+                    alert(`Lỗi: ${error.message}`);
+                });
+        });
+    </script>
+</body>
+</html>

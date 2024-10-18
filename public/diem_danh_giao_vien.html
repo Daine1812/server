@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điểm Danh Giáo Viên</title>
+    <style>
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav ul {
+            list-style-type: none;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .teacher-list, .event-participation {
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Điểm Danh Giáo Viên</h1>
+        <nav>
+            <ul>
+                <li><a href="trangchu.html">Trang Chủ</a></li>
+                <li><a href="tat_ca_giao_vien.html">Tất Cả Giáo Viên</a></li>
+                <li><a href="them_giao_vien.html">Thêm Giáo Viên</a></li>
+                <li><a href="diem_danh_giao_vien.html">Điểm Danh Giáo Viên</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="teacher-list">
+        <h2>Danh Sách Giáo Viên</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên</th>
+                    <th>Môn Dạy</th>
+                    <th>Điểm Danh</th>
+                </tr>
+            </thead>
+            <tbody id="teacher-table-body">
+                <!-- Dữ liệu sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+        <button id="submit-attendance">Lưu Điểm Danh</button>
+    </div>
+
+    <div class="event-participation">
+        <h2>Tham Gia Sự Kiện</h2>
+        <form id="event-form">
+            <label for="event-name">Tên Sự Kiện:</label>
+            <input type="text" id="event-name" required>
+            <label for="event-fee">Mức Lương:</label>
+            <input type="number" id="event-fee" required>
+            <label for="event-teacher">Chọn Giáo Viên:</label>
+            <select id="event-teacher" required>
+                <option value="">Chọn giáo viên</option>
+                <!-- Danh sách giáo viên sẽ được thêm vào đây -->
+            </select>
+            <button type="submit">Thêm Sự Kiện</button>
+        </form>
+        <h3>Danh Sách Sự Kiện</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên Giáo Viên</th>
+                    <th>Tên Sự Kiện</th>
+                    <th>Mức Lương (VNĐ)</th>
+                </tr>
+            </thead>
+            <tbody id="event-table-body">
+                <!-- Dữ liệu sự kiện sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="attendance-report" style="display:none;">
+        <h2>Bảng Điểm Danh</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên</th>
+                    <th>Số Ngày Đi Làm</th>
+                    <th>Số Sự Kiện Tham Gia</th>
+                    <th>Tổng Lương (VNĐ)</th>
+                </tr>
+            </thead>
+            <tbody id="attendance-table-body">
+                <!-- Dữ liệu sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+        const tableBody = document.getElementById('teacher-table-body');
+        const eventTableBody = document.getElementById('event-table-body');
+        const eventTeacherSelect = document.getElementById('event-teacher');
+
+        // Thêm dữ liệu giáo viên vào bảng và danh sách chọn
+        teachers.forEach(teacher => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${teacher.name}</td>
+                <td>${teacher.subject}</td>
+                <td><input type="checkbox" value="${teacher.name}"></td>
+            `;
+            tableBody.appendChild(row);
+
+            const option = document.createElement('option');
+            option.value = teacher.name;
+            option.textContent = teacher.name;
+            eventTeacherSelect.appendChild(option);
+        });
+
+        // Xử lý sự kiện khi lưu điểm danh
+        document.getElementById('submit-attendance').addEventListener('click', function() {
+            const checkedTeachers = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                .map(checkbox => checkbox.value);
+            
+            if (checkedTeachers.length === 0) {
+                alert('Vui lòng chọn ít nhất một giáo viên để điểm danh.');
+                return;
+            }
+
+            // Cập nhật số ngày đi làm
+            const attendanceCount = JSON.parse(localStorage.getItem('attendanceCount')) || {};
+            checkedTeachers.forEach(teacher => {
+                attendanceCount[teacher] = (attendanceCount[teacher] || 0) + 1;
+            });
+            localStorage.setItem('attendanceCount', JSON.stringify(attendanceCount));
+
+            // Hiển thị bảng điểm danh
+            displayAttendanceReport(attendanceCount);
+        });
+
+        // Xử lý sự kiện thêm sự kiện
+        document.getElementById('event-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const eventName = document.getElementById('event-name').value;
+            const eventFee = parseInt(document.getElementById('event-fee').value);
+            const selectedTeacher = eventTeacherSelect.value;
+
+            if (!selectedTeacher) {
+                alert('Vui lòng chọn giáo viên tham gia sự kiện.');
+                return;
+            }
+
+            // Lưu sự kiện vào local storage
+            const events = JSON.parse(localStorage.getItem('events')) || [];
+            events.push({ teacher: selectedTeacher, name: eventName, fee: eventFee });
+            localStorage.setItem('events', JSON.stringify(events));
+
+            // Hiển thị danh sách sự kiện
+            displayEventList(events);
+            document.getElementById('event-form').reset();
+            eventTeacherSelect.value = ""; // Reset chọn giáo viên
+        });
+
+        function displayEventList(events) {
+            eventTableBody.innerHTML = ''; // Xóa nội dung trước đó
+            events.forEach(event => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${event.teacher}</td>
+                    <td>${event.name}</td>
+                    <td>${event.fee.toLocaleString()} VNĐ</td>
+                `;
+                eventTableBody.appendChild(row);
+            });
+        }
+
+        function displayAttendanceReport(attendanceCount) {
+            const attendanceTableBody = document.getElementById('attendance-table-body');
+            attendanceTableBody.innerHTML = ''; // Xóa nội dung trước đó
+
+            const events = JSON.parse(localStorage.getItem('events')) || [];
+            for (const [name, count] of Object.entries(attendanceCount)) {
+                const salaryFromAttendance = count * 50000; // Tính lương từ đi làm
+                const salaryFromEvents = events.filter(event => event.teacher === name).reduce((sum, event) => sum + event.fee, 0); // Tính lương từ sự kiện
+                const totalSalary = salaryFromAttendance + salaryFromEvents;
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${name}</td>
+                    <td>${count}</td>
+                    <td>${events.filter(event => event.teacher === name).length}</td>
+                    <td>${totalSalary.toLocaleString()} VNĐ</td>
+                `;
+                attendanceTableBody.appendChild(row);
+            }
+
+            document.getElementById('attendance-report').style.display = 'block'; // Hiển thị bảng điểm danh
+        }
+
+        // Hiển thị danh sách sự kiện đã lưu khi tải trang
+        displayEventList(JSON.parse(localStorage.getItem('events')) || []);
+    </script>
+       <script>
+        // Kiểm tra người dùng hiện tại
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            alert('Vui lòng đăng nhập!');
+            window.location.href = 'dang_nhap.html';
+        } else {
+            const user = JSON.parse(localStorage.getItem(currentUser));
+            if (user.role !== 'admin') {
+                alert('Bạn không có quyền truy cập trang này!');
+                window.location.href = 'trangchu.html';
+            }
+        }
+
+        document.getElementById('teacher-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('id').value;
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const degree = document.getElementById('degree').value;
+            const subject = document.getElementById('subject').value;
+
+            const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+            teachers.push({ id, name, age, degree, subject });
+            localStorage.setItem('teachers', JSON.stringify(teachers));
+
+            window.location.href = 'tat_ca_giao_vien.html';
+        });
+    </script>
+</body>
+</html>

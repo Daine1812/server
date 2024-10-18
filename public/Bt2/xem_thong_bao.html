@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xem Thông Báo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="them_thong_bao.html">Thêm Thông Báo</a></li>
+                <li><a href="xem_thong_bao.html">Xem Thông Báo</a></li>
+                <!-- Các mục khác -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Xem Thông Báo</h1>
+        <div id="notification-list"></div>
+        <button onclick="goHome()">Quay về Trang Chủ</button>
+    </main>
+    <footer>
+        <p></p>
+    </footer>
+
+    <script>
+        function loadNotifications() {
+            const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+            const notificationList = document.getElementById('notification-list');
+
+            notifications.forEach((notification, index) => {
+                const notificationDiv = document.createElement('div');
+                notificationDiv.className = 'notification';
+                notificationDiv.innerHTML = `
+                    <h2>${notification.title}</h2>
+                    <p>${notification.content}</p>
+                    <button onclick="deleteNotification(${index})">Xóa</button>
+                `;
+                notificationList.appendChild(notificationDiv);
+            });
+        }
+
+        function deleteNotification(index) {
+            const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+            notifications.splice(index, 1);
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            window.location.reload(); // Tải lại trang để cập nhật thông báo
+        }
+
+        function goHome() {
+            window.location.href = 'index.html'; // Chuyển về trang chủ
+        }
+
+        // Tải thông báo khi trang được mở
+        window.onload = loadNotifications;
+    </script>
+</body>
+</html>

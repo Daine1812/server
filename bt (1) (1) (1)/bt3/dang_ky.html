@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url(); /* Cập nhật với ảnh nền của bạn */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            color: #000000;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000000;
+        }
+        form {
+            max-width: 350px;
+            margin: 100px auto;
+            background: rgba(255, 255, 255, 0.1); /* Nền kính trong suốt */
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px); /* Hiệu ứng mờ */
+            border: 1px solid rgba(12, 12, 12, 0.2); /* Viền mờ */
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #000000;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2); /* Trường nhập liệu trong suốt */
+            color: #000000;
+            font-size: 16px;
+        }
+        input::placeholder {
+            color: #d3d3d3; /* Màu chữ placeholder nhẹ */
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00bfa5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #008e7a;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #d3d3d3;
+        }
+        .login-link a {
+            color: #00bfa5;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Đăng Ký Tài Khoản</h1>
+    <form id="register-form">
+        <label for="username">Tên Đăng Nhập:</label>
+        <input type="text" id="username" name="username" placeholder="Tên đăng nhập" required>
+
+        <label for="password">Mật Khẩu:</label>
+        <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
+
+        <label for="confirm-password">Xác Nhận Mật Khẩu:</label>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Xác nhận mật khẩu" required>
+
+        <button type="submit">Đăng Ký</button>
+    </form>
+
+    <div class="login-link">
+        <p>Đã có tài khoản? <a href="dang_nhap.html">Đăng Nhập ngay</a></p>
+    </div>
+
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Kiểm tra mật khẩu có khớp không
+            if (password !== confirmPassword) {
+                alert('Mật khẩu và xác nhận mật khẩu không khớp!');
+                return; // Dừng lại nếu mật khẩu không khớp
+            }
+
+            // Kiểm tra vai trò của người dùng
+            let role = 'user'; // Mặc định là user
+            if (username === 'tuan') {
+                role = 'admin'; // Nếu tên đăng nhập là "tuan", gán vai trò admin
+            }
+
+            // Lưu tài khoản vào localStorage
+            const user = { username, password, role };
+            localStorage.setItem(username, JSON.stringify(user));
+
+            alert('Đăng ký thành công!');
+            window.location.href = 'dang_nhap.html'; // Chuyển đến trang đăng nhập
+        });
+    </script>
+</body>
+</html>

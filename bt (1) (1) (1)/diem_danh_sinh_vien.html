@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điểm Danh Sinh Viên</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            color: white;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+        }
+        .form-container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Điểm Danh Sinh Viên</h1>
+        <nav>
+            <ul>
+                <li><a href="indexx.html">Trang Chủ</a></li>
+                <li><a href="tat_ca_sinh_vien.html">Tất Cả Sinh Viên</a></li>
+                <li><a href="them_sinh_vien.html">Thêm Sinh Viên</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="form-container">
+        <h2>Điểm Danh Sinh Viên</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Điểm Danh</th>
+                    <th>Số Ngày Đi Điểm Danh</th>
+                </tr>
+            </thead>
+            <tbody id="attendance-table-body">
+                <!-- Dữ liệu sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+        <button id="save-attendance-button">Lưu Điểm Danh</button>
+    </div>
+
+    <script>
+        const students = JSON.parse(localStorage.getItem('students')) || [];
+
+        function renderAttendanceTable() {
+            const tableBody = document.getElementById('attendance-table-body');
+            tableBody.innerHTML = ''; // Xóa nội dung cũ
+
+            students.forEach(student => {
+                const attendanceCount = JSON.parse(localStorage.getItem('attendanceCount')) || {};
+                const daysPresent = attendanceCount[student.id] || 0; // Lấy số ngày đã điểm danh
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.id}</td>
+                    <td>${student.name}</td>
+                    <td>
+                        <input type="checkbox" id="attendance-${student.id}">
+                    </td>
+                    <td>${daysPresent}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        document.getElementById('save-attendance-button').addEventListener('click', function() {
+            const attendanceCount = JSON.parse(localStorage.getItem('attendanceCount')) || {};
+            students.forEach(student => {
+                const isPresent = document.getElementById(`attendance-${student.id}`).checked;
+                if (isPresent) {
+                    attendanceCount[student.id] = (attendanceCount[student.id] || 0) + 1; // Cập nhật số ngày điểm danh
+                }
+            });
+            localStorage.setItem('attendanceCount', JSON.stringify(attendanceCount)); // Lưu số ngày điểm danh vào localStorage
+
+            alert('Đã lưu điểm danh!');
+            renderAttendanceTable(); // Cập nhật bảng điểm danh
+        });
+
+        renderAttendanceTable();
+    </script>
+           <script>
+            // Kiểm tra người dùng hiện tại
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                alert('Vui lòng đăng nhập!');
+                window.location.href = 'dang_nhap.html';
+            } else {
+                const user = JSON.parse(localStorage.getItem(currentUser));
+                if (user.role !== 'admin') {
+                    alert('Bạn không có quyền truy cập trang này!');
+                    window.location.href = 'indexx.html';
+                }
+            }
+    
+            document.getElementById('teacher-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+    
+                const id = document.getElementById('id').value;
+                const name = document.getElementById('name').value;
+                const age = document.getElementById('age').value;
+                const degree = document.getElementById('degree').value;
+                const subject = document.getElementById('subject').value;
+    
+                const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+                teachers.push({ id, name, age, degree, subject });
+                localStorage.setItem('teachers', JSON.stringify(teachers));
+    
+                window.location.href = 'tat_ca_giao_vien.html';
+            });
+        </script>
+    
+</body>
+</html>

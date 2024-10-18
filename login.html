@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng Nhập</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <img src="avatar.png" alt="Avatar" class="avatar">
+      <h2>Đăng Nhập</h2>
+      <form id="loginForm">
+        <div class="input-container">
+          <label for="username">Tên đăng nhập</label>
+          <input type="text" id="username" placeholder="Enter Username" required>
+        </div>
+        <div class="input-container">
+          <label for="password">Mật khẩu</label>
+          <a href="#" class="forgot-password">Quên mật khẩu</a>
+          <input type="password" id="password" placeholder="Vui lòng nhập mật khẩu" required>
+        </div>
+        <button type="submit" class="login-btn">Đăng Nhập</button>
+        <div class="register-link">
+          Bạn không có tài khoản? <a href="#">Đăng Ký</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
